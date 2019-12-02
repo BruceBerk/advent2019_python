@@ -1,4 +1,4 @@
-"""Day 01: Fuel Counter Upper"""
+"""Advent of Code 2019 Day 01: Fuel Counter Upper"""
 
 import fuel_required_01 as fr
 
