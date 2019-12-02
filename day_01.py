@@ -25,15 +25,8 @@ if __name__ == "__main__":
     module_fuel = sum(ans_list)
     print("\nTotal fuel required is {}".format(module_fuel))
 
-    list_extra_fuel = []
-    for m_fuel in ans_list:
-        needed_fuel = 0
-        extra_fuel = fr.fuel_required(m_fuel)
-        while extra_fuel > 0:
-            needed_fuel += extra_fuel
-            extra_fuel = fr.fuel_required(extra_fuel)
-        list_extra_fuel.append(needed_fuel)
+    # now get the fuel needed taking into account the weight of the fuel
+    extra_ans_list = [fr.fuel_required_extra(int(x)) for x in mass_data]
+    extra_module_fuel = sum(extra_ans_list)
 
-    needed_extra_fuel = sum(list_extra_fuel)
-
-    print("\nPart 2 fuel required is {}".format(module_fuel + needed_extra_fuel))
+    print("\nPart 2 fuel required is {}".format(extra_module_fuel))
