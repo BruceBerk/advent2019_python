@@ -16,9 +16,12 @@ ADD_OP = 1
 MUL_OP = 2
 
 
-def run_program(memory):
+def run_program(prog):
     """Run the intcode program that is stored in the supplied memory, starting at offset 0"""
     instr_ptr = 0
+
+    # don't change original program
+    memory = [x for x in prog]
     while memory[instr_ptr] != HALT_OP:
         if memory[instr_ptr] == ADD_OP:
             addr1 = memory[instr_ptr+1]
@@ -34,3 +37,13 @@ def run_program(memory):
         instr_ptr += 4
 
     return memory
+
+
+def run_program_with_noun_and_verb(prog, noun, verb):
+    """Run intcode program with noun replacing addr 1 and verb replacing addr 2"""
+    # don't change original program
+    memory = [x for x in prog]
+    memory[1] = noun
+    memory[2] = verb
+
+    return run_program(memory)

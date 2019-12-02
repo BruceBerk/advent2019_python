@@ -18,6 +18,24 @@ test_prog_04 = [2,4,4,5,99,0]
 test_prog_05 = [1,1,1,4,99,5,6,0,99]
 
 
+def read_file_as_list():
+    """Read the data file and convert to a list of ints"""
+    with open('data/input_02.txt') as inp:
+        str_dat = inp.read()
+
+    # convert string data into a list of ints
+    prog = str_dat.split(',')
+    return [int(x) for x in prog]
+
+
+def look_for_result(result):
+    """Determine which noun (addr 1) and verb (addr 2) pair will yield a desired result in addr 0
+       Noun and verb are between 0 and 99 inclusive"""
+    prog = read_file_as_list()
+    #for noun in range(100):
+    #    for verb in range(100):
+
+
 def main():
     """Shout out to Kernighan & Ritchie"""
     new_memory = amiga.run_program(test_prog_01)
@@ -35,21 +53,11 @@ def main():
     new_memory = amiga.run_program(test_prog_05)
     print("Test prog 05 result -", new_memory)
 
-    with open('data/input_02.txt') as inp:
-        str_dat = inp.read()
-
-    # convert string data into a list of ints
-    prog_01 = str_dat.split(',')
-    prog_01 = [int(x) for x in prog_01]
+    prog_01 = read_file_as_list()
 
     # resolve the 1202 alarm and run the program
-    prog_01[1] = 12
-    prog_01[2] = 2
-
-    print("Program has {} items".format(len(prog_01)))
-
-    prog_run = amiga.run_program(prog_01)
-    print("\nResult in addr 0 = {}".format(prog_run[0]))
+    prog_run = amiga.run_program_with_noun_and_verb(prog_01, 12, 2)
+    print("\nPart 1 result in addr 0 = {}".format(prog_run[0]))
 
 
 if __name__ == "__main__":
