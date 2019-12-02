@@ -32,8 +32,14 @@ def look_for_result(result):
     """Determine which noun (addr 1) and verb (addr 2) pair will yield a desired result in addr 0
        Noun and verb are between 0 and 99 inclusive"""
     prog = read_file_as_list()
-    #for noun in range(100):
-    #    for verb in range(100):
+    for noun in range(100):
+        for verb in range(100):
+            prog_run = amiga.run_program_with_noun_and_verb(prog, noun, verb)
+            if prog_run[0] == result:
+                return (100 * noun) + verb
+
+    # if we got here, we never found our result so return -1
+    return -1
 
 
 def main():
@@ -58,6 +64,10 @@ def main():
     # resolve the 1202 alarm and run the program
     prog_run = amiga.run_program_with_noun_and_verb(prog_01, 12, 2)
     print("\nPart 1 result in addr 0 = {}".format(prog_run[0]))
+
+    # Day 2 what noun and verb resolve to 19690720?
+    ans = look_for_result(19690720)
+    print("\nPart 2 result is {}".format(ans))
 
 
 if __name__ == "__main__":
