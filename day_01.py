@@ -13,3 +13,13 @@ def test_run():
 
 if __name__ == "__main__":
     test_run()
+
+    # read the data file into a list
+    mass_data = []
+    with open("data/input_01.txt") as inp:
+        mass_data = inp.readlines()
+
+    # use a list comprehension to get the fuel required for each mass in the list
+    ans_list = [fr.fuel_required(int(x)) for x in mass_data]
+
+    print("\nTotal fuel required is {}".format(sum(ans_list)))
