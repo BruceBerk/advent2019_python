@@ -1,6 +1,6 @@
 """Advent of Code 2019 - Day 02 - Intcode Computer"""
 
-import intcode_02 as amiga
+import IntCode as computer
 
 test_prog_01 = [1,9,10,3,2,3,11,0,99,30,40,50]
 
@@ -28,14 +28,28 @@ def read_file_as_list():
     return [int(x) for x in prog]
 
 
-def look_for_result(result):
+def part1():
+    """Replace loc 1 and 2 in a program and run it"""
+    ic = computer.IntCode()
+    ic.load_prog_from_file('data/input_02.txt')
+    ic.poke(1, 12)
+    ic.poke(2, 2)
+    ic.run_program()
+    print("\nPart 1 result at addr 0 = {}".format(ic.peek(0)))
+
+
+def part2(result):
     """Determine which noun (addr 1) and verb (addr 2) pair will yield a desired result in addr 0
        Noun and verb are between 0 and 99 inclusive"""
     prog = read_file_as_list()
     for noun in range(100):
         for verb in range(100):
-            prog_run = amiga.run_program_with_noun_and_verb(prog, noun, verb)
-            if prog_run[0] == result:
+            ic = computer.IntCode()
+            ic.load_prog_from_buffer(prog)
+            ic.poke(1, noun)
+            ic.poke(2, verb)
+            ic.run_program()
+            if ic.peek(0) == result:
                 return (100 * noun) + verb
 
     # if we got here, we never found our result so return -1
@@ -44,29 +58,36 @@ def look_for_result(result):
 
 def main():
     """Shout out to Kernighan & Ritchie"""
-    new_memory = amiga.run_program(test_prog_01)
-    print("Test prog 01 result -", new_memory)
+    ic = computer.IntCode()
 
-    new_memory = amiga.run_program(test_prog_02)
-    print("Test prog 02 result -", new_memory)
+    ic.load_prog_from_buffer(test_prog_01)
+    ic.run_program()
+    print("Test prog 01 result -", ic.memory)
 
-    new_memory = amiga.run_program(test_prog_03)
-    print("Test prog 03 result -", new_memory)
+    ic.clear_program()
+    ic.load_prog_from_buffer(test_prog_02)
+    ic.run_program()
+    print("Test prog 02 result -", ic.memory)
 
-    new_memory = amiga.run_program(test_prog_04)
-    print("Test prog 04 result -", new_memory)
+    ic.clear_program()
+    ic.load_prog_from_buffer(test_prog_03)
+    ic.run_program()
+    print("Test prog 03 result -", ic.memory)
 
-    new_memory = amiga.run_program(test_prog_05)
-    print("Test prog 05 result -", new_memory)
+    ic.clear_program()
+    ic.load_prog_from_buffer(test_prog_04)
+    ic.run_program()
+    print("Test prog 04 result -", ic.memory)
 
-    prog_01 = read_file_as_list()
+    ic.clear_program()
+    ic.load_prog_from_buffer(test_prog_05)
+    ic.run_program()
+    print("Test prog 05 result -", ic.memory)
 
-    # resolve the 1202 alarm and run the program
-    prog_run = amiga.run_program_with_noun_and_verb(prog_01, 12, 2)
-    print("\nPart 1 result in addr 0 = {}".format(prog_run[0]))
+    part1()
 
     # Day 2 what noun and verb resolve to 19690720?
-    ans = look_for_result(19690720)
+    ans = part2(19690720)
     print("\nPart 2 result is {}".format(ans))
 
 
