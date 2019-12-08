@@ -79,7 +79,7 @@ def test2():
     step_cnt = cboard.shortest_path()
 
     print("\nShortest distance is {}".format(step_cnt))
-    print("Test 2: expected 6 and got {}".format(step_cnt))
+    print("Test 2: expected 30 and got {}".format(step_cnt))
 
     wire3 = ['R75','D30','R83','U83','L12','D49','R71','U7','L72']
     wire4 = ['U62','R66','U55','R34','D71','R55','D58','R83']  # = distance 159
@@ -88,7 +88,7 @@ def test2():
     step_cnt = cboard.shortest_path()
 
     print("\nShortest distance is {}".format(step_cnt))
-    print("Test 2: expected 159 and got {}".format(step_cnt))
+    print("Test 2: expected 610 and got {}".format(step_cnt))
 
     wire5 = ['R98', 'U47', 'R26', 'D63', 'R33', 'U87', 'L62', 'D20', 'R33', 'U53', 'R51']
     wire6 = ['U98', 'R91', 'D20', 'R16', 'D67', 'R40', 'U7', 'R15', 'U6', 'R7']  # = distance 135
@@ -97,7 +97,7 @@ def test2():
     step_cnt = cboard.shortest_path()
 
     print("\nShortest distance is {}".format(step_cnt))
-    print("Test 2: expected 135 and got {}".format(step_cnt))
+    print("Test 2: expected 410 and got {}".format(step_cnt))
 
 
 def part1():
@@ -117,7 +117,15 @@ def part1():
 def part2():
     """Part 2 - determine the intersection point that requires the fewest total steps to reach"""
     test2()
+    with open('data/input_03.txt') as inp:
+        indat = inp.readlines()
+        wire1 = (indat[0]).split(',')
+        wire2 = (indat[1]).split(',')
 
+        cboard = CircuitBoard.CircuitBoard([wire1, wire2])
+        step_cnt = cboard.shortest_path()
+
+        print("\nShortest step count is {}".format(step_cnt))
 
 def main():
     part1()
