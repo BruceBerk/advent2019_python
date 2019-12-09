@@ -21,4 +21,15 @@ if __name__ == "__main__":
         if pwc.is_pw_valid(pw):
             pcount += 1
 
-    print("\nCount of possible passwords is {}".format(pcount))
+    # 1686
+    print("\nPart 1 - Count of possible passwords is {}".format(pcount))
+
+    # Part 2 - need exactly 2 consecutive digits
+    pcount = 0
+    for i in range(lo, hi+1):
+        pw = str(i)
+        if pwc.is_pw_valid2(pw):
+            pcount += 1
+
+    # 1145
+    print("\nPart 2 - Count of possible passwords is {}".format(pcount))
